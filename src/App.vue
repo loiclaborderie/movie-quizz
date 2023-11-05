@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import MovieTest from '@/components/MovieTest.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
