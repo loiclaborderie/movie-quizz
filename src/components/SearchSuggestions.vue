@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { useMovieApiStore } from '@/stores/movieApi'
 import type MovieOverview from '@/types/MovieOverview'
-import { ref } from 'vue'
 interface SuggestionProp {
   movie: MovieOverview
 }
-const props = defineProps<SuggestionProp>()
+defineProps<SuggestionProp>()
 const emit = defineEmits(['select'])
 </script>
 
@@ -15,9 +13,6 @@ const emit = defineEmits(['select'])
 
 <style scoped>
 .suggestion-container {
-  padding-block: 0.3rem;
-}
-.suggestion-container:hover {
-  background: rgb(0, 0, 0, 0.1);
+  padding-block: 0.45rem;
 }
 </style>
