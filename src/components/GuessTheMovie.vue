@@ -3,10 +3,25 @@ import { useMovieApiStore } from '@/stores/movieApi'
 import { ref } from 'vue'
 import type MovieDetails from '@/types/MovieDetails'
 import SearchMovie from '@/components/SearchMovie.vue'
+import ShowInformationFound from '@/components/ShowInformationFound.vue'
+import MovieCard from './MovieCard.vue'
 import { movieGuessFinderStore } from '@/stores/movieGuessFinder'
+import IncompleteMovieCard from './IncompleteMovieCard.vue'
 
 const store = useMovieApiStore()
 const movieFinderStore = movieGuessFinderStore()
+const found = ref(false)
+const gameStarted = ref(false)
+
+function gameStart() {
+  if (gameStarted.value === false) {
+    gameStarted.value = true
+  }
+}
+
+function gameEnd() {
+  found.value = true
+}
 
 let response = await store.getRandomMovie()
 console.log(response.data.value)
@@ -18,29 +33,22 @@ let detailedMovieResponse = await store.getMovieById(movieSelected.id)
 let movieDetails: MovieDetails = detailedMovieResponse.data.value
 movieFinderStore.movieToFind = movieDetails
 
+const cheat = ref(false)
+
 console.log(movieDetails, detailedMovieResponse)
 </script>
 
 <template>
+  <button @click="cheat = !cheat">CHEAT</button>
   <div class="searchGuess">
-    <SearchMovie />
+    <SearchMovie @search="gameStart" @found="gameEnd" />
   </div>
-  <h1>TETS 2</h1>
   <div class="test" v-if="detailedMovieResponse.data.value">
-    <h4>{{ movieDetails.title }}</h4>
-    <p>{{ movieDetails.overview }}</p>
-    <p>{{ movieDetails.release_date }}</p>
-    <p>{{ movieDetails.runtime }} min</p>
-    <ul>
-      <li v-for="genre in movieDetails.genres" :key="genre.id">
-        {{ genre.name }}
-      </li>
-    </ul>
-    <!-- <img
-      :src="'https://image.tmdb.org/t/p/original/' + movieDetails.backdrop_path"
-      :alt="movieDetails.title"
-    /> -->
+    <div class="display-answer" v-show="cheat || found">
+      <MovieCard :movie="detailedMovieResponse.data.value" />
+    </div>
   </div>
+  <template v-if="!found && gameStarted"><IncompleteMovieCard /></template>
 </template>
 
 <style scoped>
