@@ -3,7 +3,6 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <h1>TETS</h1>
   <Suspense>
     <router-view></router-view>
   </Suspense>
