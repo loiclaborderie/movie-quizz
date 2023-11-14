@@ -48,7 +48,7 @@ export const movieGuessFinderStore = defineStore('movieGuessFinder', () => {
   async function getHints(movieId: number) {
     const response = await tmdbStore.getMovieById(movieId)
     const comparedMovie: MovieDetails = response.data.value
-    failedAttempts.value.push(comparedMovie)
+    failedAttempts.value.unshift(comparedMovie)
 
     if (!movieToFind.value || !compareMovie) {
       console.error('there has been an error somewhere bro')
