@@ -2,6 +2,7 @@
 import { movieGuessFinderStore } from '@/stores/movieGuessFinder'
 import CounterAnimated from './CounterAnimated.vue'
 import { computed } from 'vue'
+import ShowInformationFound from '@/components/showInformationFound.vue'
 
 const store = movieGuessFinderStore()
 
@@ -10,7 +11,7 @@ const opacity = computed(() => {
     if (store.failedAttempts.length > 15) {
       return '70%'
     } else {
-      return `${100 - store.failedAttempts.length * 2}%`
+      return `${100 - store.failedAttempts.length}%`
     }
   } else {
     return '100%'
