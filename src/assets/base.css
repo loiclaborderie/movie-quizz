@@ -8,4 +8,5 @@
 
 body {
   min-height: 100vh;
+  background: hsl(232, 1%, 3%);
 }
