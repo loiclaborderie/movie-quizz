@@ -45,6 +45,11 @@ export const movieGuessFinderStore = defineStore('movieGuessFinder', () => {
     }
   }
 
+  function resetGame() {
+    movieToFind.value = null
+    failedAttempts.value = []
+  }
+
   async function getHints(movieId: number) {
     const response = await tmdbStore.getMovieById(movieId)
     const comparedMovie: MovieDetails = response.data.value
@@ -146,5 +151,5 @@ export const movieGuessFinderStore = defineStore('movieGuessFinder', () => {
     console.log(interval)
   }
 
-  return { movieToFind, compareMovie, getHints, hintsFound, cluesFound, failedAttempts }
+  return { movieToFind, compareMovie, getHints, hintsFound, cluesFound, failedAttempts, resetGame }
 })
