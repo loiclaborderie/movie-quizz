@@ -23,7 +23,7 @@ const emit = defineEmits(['select'])
       <img v-else src="../../public/placeholder.jfif" alt="movie.original_title" />
     </div>
     <div class="movie-details">
-      <h5>{{ movie.title }}</h5>
+      <h5>{{ `${movie.title.substring(0, 30)}${movie.title.length > 30 ? '...' : ''}` }}</h5>
       <p v-if="movie.release_date !== ''">{{ movie.release_date.substring(0, 4) }}</p>
       <p v-else>Unknown year</p>
     </div>
