@@ -31,7 +31,9 @@ const imageLink = computed(() => {
     <div class="image-darkener"></div>
     <div class="dots-bg"></div>
     <div class="card-content">
-      <div class="card-title">{{ movie.title }}</div>
+      <div class="card-title">
+        {{ `${movie.title.substring(0, 35)}${movie.title.length > 30 ? '...' : ''}` }}
+      </div>
       <div class="movie-overview">
         {{ `${movie.overview.substring(0, 300)}${movie.overview.length > 300 ? '...' : ''}` }}
       </div>
