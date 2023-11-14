@@ -6,6 +6,7 @@ import SearchMovie from '@/components/SearchMovie.vue'
 import MovieCard from './MovieCard.vue'
 import { movieGuessFinderStore } from '@/stores/movieGuessFinder'
 import IncompleteMovieCard from './IncompleteMovieCard.vue'
+import SuccessModal from '@/components/SuccessModal.vue'
 
 const store = useMovieApiStore()
 const movieFinderStore = movieGuessFinderStore()
@@ -18,33 +19,49 @@ function gameStart() {
   }
 }
 
+function resetGame() {
+  alert('reset game')
+  movieFinderStore.resetGame()
+  found.value = false
+  gameStarted.value = false
+  affectRandomMovie()
+}
+
 function gameEnd() {
   found.value = true
 }
 
-let response = await store.getRandomMovie()
-console.log(response.data.value)
+async function affectRandomMovie() {
+  let response = await store.getRandomMovie()
+  console.log(response.data.value)
 
-const pickNumber = Math.floor(Math.random() * 20)
-const movieSelected = response.data.value.results[pickNumber]
+  const pickNumber = Math.floor(Math.random() * 20)
+  const movieSelected = response.data.value.results[pickNumber]
 
-let detailedMovieResponse = await store.getMovieById(movieSelected.id)
-let movieDetails: MovieDetails = detailedMovieResponse.data.value
-movieFinderStore.movieToFind = movieDetails
+  let detailedMovieResponse = await store.getMovieById(movieSelected.id)
+  let movieDetails: MovieDetails = detailedMovieResponse.data.value
+  movieFinderStore.movieToFind = movieDetails
+  console.log(movieDetails, detailedMovieResponse)
+}
 
 const cheat = ref(false)
-
-console.log(movieDetails, detailedMovieResponse)
+affectRandomMovie()
 </script>
 
 <template>
+  <SuccessModal
+    v-if="found && movieFinderStore.movieToFind"
+    :attempts="movieFinderStore.failedAttempts"
+    :movie="movieFinderStore.movieToFind"
+    @reset="resetGame"
+  />
   <button @click="cheat = !cheat">CHEAT</button>
   <div class="searchGuess">
     <SearchMovie @search="gameStart" @found="gameEnd" />
   </div>
-  <div class="test" v-if="detailedMovieResponse.data.value">
+  <div class="test" v-if="movieFinderStore.movieToFind">
     <div class="display-answer" v-show="cheat || found">
-      <MovieCard :movie="detailedMovieResponse.data.value" />
+      <MovieCard :movie="movieFinderStore.movieToFind" />
     </div>
   </div>
   <template v-if="!found && gameStarted"><IncompleteMovieCard /></template>
