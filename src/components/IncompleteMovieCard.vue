@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import ShowInformationFound from '@/components/ShowInformationFound.vue'
 import { movieGuessFinderStore } from '@/stores/movieGuessFinder'
 import CounterAnimated from './CounterAnimated.vue'
+import { computed } from 'vue'
 
 const store = movieGuessFinderStore()
 
@@ -45,9 +44,9 @@ const opacity = computed(() => {
 .movie-card {
   margin: 2rem auto;
   width: 80%;
-  min-height: 150px;
+  height: 200px;
   position: relative;
-  background-color: rgb(16 16 16);
+  background-color: hsl(233, 8%, 19%);
   border-radius: 1.5rem;
   padding: 1rem;
   color: rgb(250 249 246);
@@ -55,6 +54,14 @@ const opacity = computed(() => {
   background-position: center;
   background-size: cover;
   overflow: hidden;
+  box-shadow:
+    0 0 0.5px 1px hsla(0, 0%, 100%, 0.075),
+    0 0 0 1px hsla(0, 0%, 0%, 0.05),
+    0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
+    0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
+    0 3.5px 6px hsla(0, 0%, 0%, 0.09);
+
+  border-radius: 12px;
 }
 
 .movie-card .image-darkener {
@@ -77,7 +84,7 @@ const opacity = computed(() => {
   background-size: 1.1rem 1.1rem;
   border-radius: 1.25rem;
   overflow: hidden;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .card-content .card-title,
