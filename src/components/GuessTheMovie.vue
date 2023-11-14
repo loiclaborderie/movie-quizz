@@ -3,7 +3,6 @@ import { useMovieApiStore } from '@/stores/movieApi'
 import { ref } from 'vue'
 import type MovieDetails from '@/types/MovieDetails'
 import SearchMovie from '@/components/SearchMovie.vue'
-import ShowInformationFound from '@/components/ShowInformationFound.vue'
 import MovieCard from './MovieCard.vue'
 import { movieGuessFinderStore } from '@/stores/movieGuessFinder'
 import IncompleteMovieCard from './IncompleteMovieCard.vue'
@@ -49,12 +48,16 @@ console.log(movieDetails, detailedMovieResponse)
     </div>
   </div>
   <template v-if="!found && gameStarted"><IncompleteMovieCard /></template>
+  <template v-if="movieFinderStore.failedAttempts.length && movieFinderStore.movieToFind">
+    <template v-for="movieTried in movieFinderStore.failedAttempts" :key="movieTried">
+      <MovieCard :movie="movieTried" :movie-to-find="movieFinderStore.movieToFind" />
+    </template>
+  </template>
 </template>
 
 <style scoped>
 .searchGuess {
   padding: 3rem 0 2rem;
-  background: black;
   display: flex;
   align-items: center;
   flex-direction: column;
