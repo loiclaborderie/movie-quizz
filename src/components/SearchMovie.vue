@@ -4,7 +4,7 @@ import { movieGuessFinderStore } from '@/stores/movieGuessFinder'
 import type MovieOverview from '@/types/MovieOverview'
 import { ref } from 'vue'
 import SearchSuggestions from '@/components/SearchSuggestions.vue'
-import { debounce } from '@/helpers/debounce.ts'
+import { debounce } from '@/helpers/debounce'
 
 const movieDataStore = useMovieApiStore()
 const movieFinderStore = movieGuessFinderStore()
@@ -60,9 +60,12 @@ async function compareMovies(movieId: number) {
     <Suspense>
       <template #default>
         <div class="resultsSuggested" v-if="searching && searchResults?.length">
-          <div class="suggested" v-for="searchResult in searchResults" :key="searchResult.id">
-            <SearchSuggestions :movie="searchResult" @select="compareMovies" />
-          </div>
+          <SearchSuggestions
+            v-for="searchResult in searchResults"
+            :key="searchResult.id"
+            :movie="searchResult"
+            @select="compareMovies"
+          />
         </div>
         <div
           class="resultsSuggested"
@@ -116,12 +119,14 @@ body {
   margin-inline: 2px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  text-align: center;
   overflow: hidden;
+  position: absolute;
+  z-index: 10;
 }
 
 .searchAndResults {
   width: min(80%, 30em);
+  position: relative;
 }
 .search-bar input,
 .search-btn {
@@ -192,9 +197,11 @@ body {
 
 .suggested {
   border-bottom: 1px solid #b5a2a2ad;
-  padding-inline: 1rem;
+  padding: 0.5rem 1rem;
   transition: 0.3s ease-in-out;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 .suggested:hover {
   background: rgb(0, 0, 0, 0.03);

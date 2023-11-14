@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import type MovieDetails from '@/types/MovieDetails'
 
 interface MovieCardProps {
   movie: MovieDetails
+  movieToFind?: MovieDetails
 }
 const props = defineProps<MovieCardProps>()
 
@@ -17,16 +18,18 @@ const movieTime = computed(() => {
     return `${hours}h${minutesLeft >= 10 ? '' : '0'}${minutesLeft}`
   }
 })
+
+const imageLink = computed(() => {
+  return `url(https://image.tmdb.org/t/p/original${
+    props.movie.backdrop_path ? props.movie.backdrop_path : props.movie.poster_path
+  })`
+})
 </script>
 
 <template>
-  <div
-    :style="{
-      'background-image': 'url(https://image.tmdb.org/t/p/original/' + movie.backdrop_path + ')'
-    }"
-    class="movie-card"
-  >
+  <div class="movie-card">
     <div class="image-darkener"></div>
+    <div class="dots-bg"></div>
     <div class="card-content">
       <div class="card-title">{{ movie.title }}</div>
       <div class="movie-overview">
@@ -51,6 +54,7 @@ const movieTime = computed(() => {
 .movie-card {
   margin: 2rem auto;
   width: 80%;
+  height: 200px;
   position: relative;
   background-color: rgb(16 16 16);
   border-radius: 1.5rem;
@@ -60,6 +64,7 @@ const movieTime = computed(() => {
   background-position: center;
   background-size: cover;
   overflow: hidden;
+  background-image: v-bind(imageLink);
 }
 
 .movie-card .image-darkener {
@@ -69,15 +74,19 @@ const movieTime = computed(() => {
   z-index: 2;
   opacity: 0.75;
 }
-
-.card-content {
-  position: relative;
-  z-index: 3;
+.movie-card .dots-bg {
+  position: absolute;
+  inset: 0;
   background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-position: 50% 50%;
   background-size: 1.1rem 1.1rem;
   border-radius: 1.25rem;
   overflow: hidden;
+}
+
+.card-content {
+  position: relative;
+  z-index: 3;
 }
 
 .card-content .card-title,
