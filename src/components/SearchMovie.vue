@@ -5,6 +5,7 @@ import type MovieOverview from '@/types/MovieOverview'
 import { ref } from 'vue'
 import SearchSuggestions from '@/components/SearchSuggestions.vue'
 import { debounce } from '@/helpers/debounce'
+import { onClickOutside } from '@vueuse/core'
 
 const movieDataStore = useMovieApiStore()
 const movieFinderStore = movieGuessFinderStore()
@@ -13,6 +14,17 @@ const emit = defineEmits(['search', 'found'])
 const searchTerm = ref('')
 const searching = ref(false)
 let searchResults = ref<null | MovieOverview[]>(null)
+const searchBar = ref(null)
+
+onClickOutside(searchBar, () => {
+  searching.value = false
+})
+
+function showResultsIfExist() {
+  if (searchResults.value) {
+    searching.value = true
+  }
+}
 
 async function fireSearch() {
   searching.value = true
@@ -31,9 +43,7 @@ async function compareMovies(movieId: number) {
   if (!movieMatch) {
     const result = await movieFinderStore.getHints(movieId)
     if (result) {
-      const { cluesFound, hintsFound } = result
       emit('search')
-      console.log('IMPORTANT TEST FINAL', cluesFound, hintsFound.value)
     }
   } else {
     emit('found')
@@ -42,7 +52,7 @@ async function compareMovies(movieId: number) {
 </script>
 
 <template>
-  <div class="searchAndResults">
+  <div class="searchAndResults" ref="searchBar" @click="showResultsIfExist">
     <div class="search-bar">
       <input
         placeholder="Guess the movie"
@@ -57,7 +67,7 @@ async function compareMovies(movieId: number) {
         <span>Search</span>
       </button>
     </div>
-    <Suspense>
+    <Suspense v-if="searching">
       <template #default>
         <div class="resultsSuggested" v-if="searching && searchResults?.length">
           <SearchSuggestions
@@ -125,7 +135,7 @@ body {
 }
 
 .searchAndResults {
-  width: min(80%, 30em);
+  width: min(80%, 32em);
   position: relative;
 }
 .search-bar input,
