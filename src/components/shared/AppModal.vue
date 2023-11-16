@@ -26,7 +26,7 @@ import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
 const isModalOpen = ref(true)
-const modal = ref(null)
+const modal = ref<HTMLElement | null>(null)
 onClickOutside(modal, () => (isModalOpen.value = false))
 </script>
 
