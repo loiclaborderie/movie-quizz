@@ -1,7 +1,7 @@
 import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import type MovieDetails from '@/types/MovieDetails'
-import { useMovieApiStore } from '@/stores/movieApi'
+import { useMovieApi } from '@/composables/useMovieApi'
 
 interface foundHints {
   year: Interval
@@ -18,7 +18,6 @@ interface Interval {
 }
 
 export const movieGuessFinderStore = defineStore('movieGuessFinder', () => {
-  const tmdbStore = useMovieApiStore()
   const movieToFind = ref<MovieDetails | null>(null)
   const failedAttempts = ref<MovieDetails[]>([])
 
@@ -27,6 +26,7 @@ export const movieGuessFinderStore = defineStore('movieGuessFinder', () => {
     movieLength: { moreThan: null, lessThan: null }
   })
   const cluesFound = reactive<foundClues>({ year: null, genre: [], movieLength: null })
+  const { getMovieById } = useMovieApi()
 
   function compareMovie(movieId: number) {
     if (!movieToFind.value) {
@@ -51,7 +51,7 @@ export const movieGuessFinderStore = defineStore('movieGuessFinder', () => {
   }
 
   async function getHints(movieId: number) {
-    const response = await tmdbStore.getMovieById(movieId)
+    const response = await getMovieById(movieId)
     const comparedMovie: MovieDetails = response.data.value
     failedAttempts.value.unshift(comparedMovie)
 
