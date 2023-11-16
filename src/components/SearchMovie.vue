@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMovieApiStore } from '@/stores/movieApi'
+import { useMovieApi } from '@/composables/useMovieApi'
 import { movieGuessFinderStore } from '@/stores/movieGuessFinder'
 import type MovieOverview from '@/types/MovieOverview'
 import { ref } from 'vue'
@@ -7,7 +7,7 @@ import SearchSuggestions from '@/components/SearchSuggestions.vue'
 import { debounce } from '@/helpers/debounce'
 import { onClickOutside } from '@vueuse/core'
 
-const movieDataStore = useMovieApiStore()
+const {searchMovie} = useMovieApi()
 const movieFinderStore = movieGuessFinderStore()
 const emit = defineEmits(['search', 'found'])
 
@@ -28,7 +28,7 @@ function showResultsIfExist() {
 
 async function fireSearch() {
   searching.value = true
-  const foundData = await movieDataStore.searchMovie(searchTerm.value)
+  const foundData = await searchMovie(searchTerm.value)
   searchResults.value = foundData.data.value.results
   console.log(searchResults.value)
 }
