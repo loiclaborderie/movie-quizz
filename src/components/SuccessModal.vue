@@ -57,7 +57,7 @@ const congrats = computed(() => {
   max-width: 600px;
 }
 
-::v-deep .movie-card {
+:deep(.movie-card) {
   width: 100%;
 }
 
