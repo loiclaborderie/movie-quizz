@@ -49,7 +49,7 @@ const opacity = computed(() => {
   position: relative;
   background-color: hsl(233, 8%, 19%);
   border-radius: 1.5rem;
-  padding: 1rem;
+  padding: .5rem clamp(1rem, 1vw + 1rem, 2rem);
   color: rgb(250 249 246);
   background-repeat: no-repeat;
   background-position: center;
@@ -78,7 +78,7 @@ const opacity = computed(() => {
   inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-evenly;
   z-index: 3;
   background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-position: 50% 50%;
@@ -86,24 +86,6 @@ const opacity = computed(() => {
   border-radius: 1.25rem;
   overflow: hidden;
   gap: 3rem;
-}
-
-.card-content .card-title,
-.card-content .movie-overview {
-  text-align: center;
-}
-
-.movie-card .card-title {
-  text-align: center;
-  color: rgb(250 249 246);
-  font-size: 2.6rem;
-  padding-bottom: 1rem;
-}
-
-.card-content .movie-overview {
-  color: rgb(255 255 255 / 75%);
-  line-height: 1.3rem;
-  font-size: 0.9rem;
 }
 
 @media (max-width: 700px) {
@@ -116,26 +98,24 @@ const opacity = computed(() => {
 }
 
 @media (max-width: 600px) {
-  .card-content {
-    padding: 3rem;
-  }
-
   .card-content .card-title {
     font-size: 2.2rem;
   }
 }
 .card-labels {
   display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding-bottom: 1.5rem;
+  gap: clamp(0.75rem, 0.6vw + 1rem, 2rem);
+  flex-wrap: wrap;
 }
 .label {
   font-size: 0.8rem;
   border: 1px solid #908b8ba3;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   border-radius: 1em;
-  padding: 0.3em 0.9em;
+  padding: clamp(0.2rem, 0.2vw + 0.2rem, 0.5rem) clamp(0.5rem, 0.5vw + 0.5rem, 1rem);
   background: #33313191;
   color: #e4d6d6;
 }

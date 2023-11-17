@@ -56,17 +56,20 @@ const imageLink = computed(() => {
 .movie-card {
   margin: 2rem auto;
   width: 80%;
-  height: 200px;
+  min-height: 200px;
   position: relative;
   background-color: rgb(16 16 16);
   border-radius: 1.5rem;
-  padding: 1rem;
+  padding: clamp(.5rem, .5vw + .5rem, 1rem) clamp(1rem, 1vw + 1rem, 2rem);
   color: rgb(250 249 246);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   overflow: hidden;
   background-image: v-bind(imageLink);
+  display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .movie-card .image-darkener {
@@ -113,17 +116,13 @@ const imageLink = computed(() => {
 @media (max-width: 700px) {
   .movie-card {
     width: calc(100% - 2rem);
-    margin: 0rem 1rem;
+    /* margin: 0rem 1rem; */
     padding: 0.75rem;
     border-radius: 1rem;
   }
 }
 
 @media (max-width: 600px) {
-  .card-content {
-    padding: 3rem;
-  }
-
   .card-content .card-title {
     font-size: 2.2rem;
   }
@@ -131,16 +130,20 @@ const imageLink = computed(() => {
 .card-labels {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: clamp(0.75rem, 0.6vw + 1rem, 2rem);
   padding-top: 1rem;
+  flex-wrap: wrap;
 }
 .label {
   font-size: 0.8rem;
   border: 1px solid #908b8ba3;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 1em;
-  padding: 0.3em 0.9em;
+  padding: clamp(0.2rem, 0.2vw + 0.2rem, 0.5rem) clamp(0.5rem, 0.5vw + 0.5rem, 1rem);
   background: #33313191;
   color: #e4d6d6;
+  text-align: center;
 }
 </style>
