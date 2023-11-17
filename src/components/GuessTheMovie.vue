@@ -20,7 +20,6 @@ function gameStart() {
 }
 
 function resetGame() {
-  alert('reset game')
   movieFinderStore.resetGame()
   found.value = false
   gameStarted.value = false
@@ -56,7 +55,12 @@ affectRandomMovie()
       @reset="resetGame"
     />
     <div class="searchGuess">
-      <SearchMovie @search="gameStart" @found="gameEnd" />
+      <div class="searchGuess__top">
+        <div class="searchbar">
+          <SearchMovie @search="gameStart" @found="gameEnd" />
+        </div>
+        <button class="searchGuess__new-game" v-if="gameStarted" @click="resetGame"><font-awesome-icon icon="fa-solid fa-rotate-right" /></button>
+      </div>
     </div>
     <div class="test" v-if="movieFinderStore.movieToFind">
       <div class="display-answer" v-show="found">
@@ -79,6 +83,46 @@ affectRandomMovie()
   padding: 3rem 0 2rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
+}
+
+.searchbar {
+   grid-column: 2;
+   width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.searchGuess__top {
+  display: grid;
+  grid-template-columns: 3fr 20fr 3fr;
+  width: 100%;
+  justify-items: center;
+}
+
+.searchGuess__new-game {
+  background-color: #ba2c24;
+  border: none;
+  color: white;
+  width: min(3rem, 100%);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  grid-column: 3;
+}
+
+
+@media screen and (max-width: 600px) {
+  .searchGuess__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
 }
 </style>
