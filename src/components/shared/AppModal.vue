@@ -66,7 +66,7 @@ onClickOutside(modal, () => (isModalOpen.value = false))
 }
 
 .modal-content {
-  padding: 20px;
+  padding: 20px 1rem;
   width: 100%;
   height: 100%;
 }

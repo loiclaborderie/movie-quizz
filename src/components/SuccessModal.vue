@@ -12,7 +12,12 @@
     </template>
     <template #actions>
       <div class="buttons">
-        <button @click="emit('reset')" class="action-btn black">New Game</button>
+        <button @click="emit('reset')" class="action-btn black">
+          <span>
+            New Game  
+          </span>
+         <font-awesome-icon icon="fa-solid fa-rotate-right" />
+        </button>
       </div>
     </template>
   </AppModal>
@@ -55,6 +60,7 @@ const congrats = computed(() => {
 
 .movieFound {
   max-width: 600px;
+  padding-block: clamp(.75rem, 1vw + .75rem, 1.5rem);
 }
 
 :deep(.movie-card) {
@@ -69,12 +75,15 @@ const congrats = computed(() => {
 }
 
 .action-btn {
-  padding: 0.45rem 1.2rem;
+  padding: 0.75rem 1.2rem;
   border: 1px solid #e7e7e7;
   background: transparent;
   border-radius: 7px;
   cursor: pointer;
   transition: 0.3s ease;
+}
+.action-btn span {
+  padding-right: 0.75rem;
 }
 .action-btn:hover {
   background: rgb(238, 238, 238);

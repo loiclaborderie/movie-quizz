@@ -135,7 +135,7 @@ body {
 }
 
 .searchAndResults {
-  width: min(80%, 32em);
+  width: min(100%, 32em);
   position: relative;
 }
 .search-bar input,
