@@ -46,6 +46,10 @@ export const movieGuessFinderStore = defineStore('movieGuessFinder', () => {
   function resetGame() {
     movieToFind.value = null
     failedAttempts.value = []
+    hintsFound.value = { year: { moreThan: null, lessThan: null }, movieLength: { moreThan: null, lessThan: null } }
+    cluesFound.year = null
+    cluesFound.genre = []
+    cluesFound.movieLength = null
   }
 
   async function getHints(movieId: number) {
