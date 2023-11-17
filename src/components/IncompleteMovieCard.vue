@@ -106,6 +106,7 @@ const opacity = computed(() => {
   display: flex;
   gap: clamp(0.75rem, 0.6vw + 1rem, 2rem);
   flex-wrap: wrap;
+  justify-content: center;
 }
 .label {
   font-size: 0.8rem;
