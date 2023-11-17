@@ -39,7 +39,6 @@ export const movieGuessFinderStore = defineStore('movieGuessFinder', () => {
     }
 
     const isMatch = movieId === movieToFind.value.id
-    console.log(`Movie ID ${movieId} ${isMatch ? 'matches' : 'does not match'} the target movie ID ${movieToFind.value.id}.`)
     return isMatch
   }
 
@@ -69,31 +68,23 @@ export const movieGuessFinderStore = defineStore('movieGuessFinder', () => {
     const genresFound = comparedMovie.genres.map((genre) => genre.name)
     const genresToMatch = movieToFind.value.genres.map((genre) => genre.name)
 
-    console.log(`Year found: ${yearFound}, year to match: ${yearToMatch}`)
-
     const yearInterval = hintsFound.value.year
     const lengthInterval = hintsFound.value.movieLength
 
     if (!cluesFound.year) {
       if (yearFound === yearToMatch) {
         cluesFound.year = yearToMatch
-        console.log('Congratulations, you found the right year!')
       } else {
         guessNumber(yearFound, yearToMatch, yearInterval)
       }
-      console.log(`Hints found: `, yearInterval)
-      console.log(`Clues found: `, cluesFound.year)
     }
 
     if (!cluesFound.movieLength) {
       if (lengthFound === lengthToMatch) {
         cluesFound.movieLength = lengthToMatch
-        console.log('Congratulations, you found the right length!')
       } else {
         guessNumber(lengthFound, lengthToMatch, lengthInterval)
       }
-      console.log(`Hints found: `, lengthInterval)
-      console.log(`Clues found: `, cluesFound.movieLength)
     }
 
     genresFound.forEach((genre) => {

@@ -32,7 +32,6 @@ function gameEnd() {
 
 async function affectRandomMovie() {
   const response = await getRandomMovie()
-  console.log(response.data.value)
 
   const pickNumber = Math.floor(Math.random() * 20)
   const movieSelected = response.data.value.results[pickNumber]
@@ -40,7 +39,6 @@ async function affectRandomMovie() {
   const detailedMovieResponse = await getMovieById(movieSelected.id)
   const movieDetails: MovieDetails = detailedMovieResponse.data.value
   movieFinderStore.movieToFind = movieDetails
-  console.log(movieDetails, detailedMovieResponse)
 }
 
 affectRandomMovie()

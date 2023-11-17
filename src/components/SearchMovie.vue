@@ -30,7 +30,6 @@ async function fireSearch() {
   searching.value = true
   const foundData = await searchMovie(searchTerm.value)
   searchResults.value = foundData.data.value.results
-  console.log(searchResults.value)
 }
 
 const debouncedFireSearch = debounce(fireSearch, 800)
