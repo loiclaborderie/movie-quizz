@@ -104,6 +104,7 @@ affectRandomMovie()
   border: none;
   color: white;
   width: min(3rem, 100%);
+  min-height: 3rem;
   text-align: center;
   text-decoration: none;
   display: inline-block;

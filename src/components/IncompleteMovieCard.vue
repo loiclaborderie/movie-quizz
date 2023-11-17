@@ -23,7 +23,7 @@ const opacity = computed(() => {
   <div
     :style="{
       'background-image':
-        'url(https://image.tmdb.org/t/p/original/' + store.movieToFind?.backdrop_path + ')'
+        'url(https://image.tmdb.org/t/p/original' + store.movieToFind?.backdrop_path + ')'
     }"
     class="movie-card"
   >
